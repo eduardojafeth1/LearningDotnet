@@ -18,8 +18,20 @@ string anotherPet = "y";
 bool validEntry = false;
 int petAge = 0;
 
+bool AgeChangeValid = false;
+
+
+int AgeChange= 0;
+           
+bool validSelected=false;
+int selectedNum=0;
+bool AnimalWithoutAge=false;
+
+
+int n =0;
 // array used to store runtime data, there is no persisted data
 string[,] ourAnimals = new string[maxPets, 6];
+            string[] ids=new string[maxPets];
 
 // create some initial ourAnimals array entries
 for (int i = 0; i < maxPets; i++)
@@ -286,33 +298,224 @@ do
             break;
 
         case "3":
+
             // Ensure animal ages and physical descriptions are complete
-            string[] defaultValues = ["", ""];
+            AnimalWithoutAge=false;
+
+            n= 0;
+ 
+        Console.Clear();
             for (int i = 0; i < maxPets; i++)
             {
-                if (ourAnimals[i, 2] != "Age: ?")
-                {
-                    continue;
-                }
+                ids[i]=ourAnimals[i,0].Remove(0,6);
 
-                for (int j = 0; j < 5; j++)
+                if( ids[i]=="" || (ourAnimals[i,4]!="Physical description: tbd" && ourAnimals[i,4]!="Physical description: "  && ourAnimals[i,2]!="Age: ?")) continue;
+
+
+
+                System.Console.WriteLine($"{n+1}. ");
+                n++;
+                for (int j = 0; j < 6; j++)
                 {
 
-                    Console.WriteLine(ourAnimals[i, j]);
+                    Console.WriteLine($" {ourAnimals[i, j]}");
+                    AnimalWithoutAge= true;
+
+                    
 
                 }
             }
-            Console.WriteLine("Challenge Project - please check back soon to see progress.");
-            Console.WriteLine("Press the Enter key to continue.");
+            if(!AnimalWithoutAge) {
+            System.Console.WriteLine("Age and physical description fields are complete for all of our friends. \nPress the Enter key to continue");
+            Console.ReadLine();
+            break;}
+            AgeChangeValid = false;
+
+
+            AgeChange= 0;
+           
+            validSelected=false;
+            selectedNum=0;
+            do
+            {
+             readResult = Console.ReadLine();
+                if(readResult==null || readResult=="")
+                {
+                    System.Console.WriteLine("entrada invalidad ,vuelve a ingresar otro id: ");
+                    continue;
+                }
+                for (int i = 0; i < maxPets; i++)
+                {
+                    if (ids[i].ToLower()==readResult.ToLower())
+                    {
+                        selectedNum=i;
+                        validSelected=true;
+                    }
+                  
+
+                }
+                if(!validSelected)Console.WriteLine("id no se encuentra,selecciones un id valido: ");
+            } while (!validSelected);
+            Console.Clear();
+            Console.WriteLine($"Mascota con id {readResult} ha sido seleccioniada");
+           
+      
+           System.Console.WriteLine("elija que editar \n1.Editar edad\n2.Editar descripcion");
+           readResult =Console.ReadLine();
+
+            switch (readResult)
+            {
+                case "1":
+
+                           do
+           {
+            
+
+            System.Console.WriteLine("ingrese la edad de la mascota: ");
             readResult = Console.ReadLine();
+
+            if (readResult != null || readResult != "?"  )
+            {
+                        
+                            AgeChangeValid = int.TryParse(readResult, out AgeChange);
+                            if(AgeChange<1) AgeChangeValid=false;
+                        
+            }
+            System.Console.WriteLine("ingrese una edad valida");
+           } while (!AgeChangeValid);
+
+           ourAnimals[selectedNum,2]= "Age: " + AgeChange;
             break;
 
-        case "4":
-            // Ensure animal nicknames and personality descriptions are complete
-            Console.WriteLine("Challenge Project - please check back soon to see progress.");
-            Console.WriteLine("Press the Enter key to continue.");
-            readResult = Console.ReadLine();
+
+
+                case "2":
+
+            Console.Clear();
+            Console.WriteLine($"Mascota con id {readResult} ha sido seleccioniada  {selectedNum}");
+            Console.WriteLine("ingrese una descripcion fisica para el id #: {readResult} (size,color,breed, gender,weight,housebroken)");
+
+            validEntry=false;
+            do
+            {
+            readResult=Console.ReadLine();
+                if(readResult==null || readResult=="") continue;
+            validEntry=true;
+            } while (!validEntry);
+            ourAnimals[selectedNum,4]= "Physical description: "+readResult;
             break;
+
+            }
+           
+           break;
+
+
+        case "4":
+
+            // Ensure animal ages and physical descriptions are complete
+            AnimalWithoutAge=false;
+
+            n= 0;
+ 
+        Console.Clear();
+            for (int i = 0; i < maxPets; i++)
+            {
+                ids[i]=ourAnimals[i,0].Remove(0,6);
+
+                if( ids[i]=="" || (ourAnimals[i,5]!="Personality: tbd" && ourAnimals[i,5]!="Personality: "  && (ourAnimals[i,3]!="Nickname: " && ourAnimals[i,3]!="Nickname: ?") )) continue;
+
+
+
+                n++;
+                for (int j = 0; j < 6; j++)
+                {
+
+                    Console.WriteLine($" {ourAnimals[i, j]}");
+                    AnimalWithoutAge= true;
+
+                    
+
+                }
+            }
+            if(!AnimalWithoutAge) {
+            System.Console.WriteLine("Age and physical description fields are complete for all of our friends. \nPress the Enter key to continue");
+            Console.ReadLine();
+            break;}
+            AgeChangeValid = false;
+
+
+            AgeChange= 0;
+           
+            validSelected=false;
+            selectedNum=0;
+            do
+            {
+             readResult = Console.ReadLine();
+                if(readResult==null || readResult=="")
+                {
+                    System.Console.WriteLine("entrada invalidad ,vuelve a ingresar otro id: ");
+                    continue;
+                }
+                for (int i = 0; i < maxPets; i++)
+                {
+                    if (ids[i].ToLower()==readResult.ToLower())
+                    {
+                        selectedNum=i;
+                        validSelected=true;
+                    }
+                  
+
+                }
+                if(!validSelected)Console.WriteLine("id no se encuentra,selecciones un id valido: ");
+            } while (!validSelected);
+            Console.Clear();
+            Console.WriteLine($"Mascota con id {readResult} ha sido seleccioniada");
+           
+      
+           System.Console.WriteLine("elija que editar \n1.Editar nicknamce\n2.Editar personalidad");
+           readResult =Console.ReadLine();
+
+            switch (readResult)
+            {
+                case "1":
+
+            do
+           {
+            
+
+            Console.WriteLine("ingrese el nickname de la mascota: ");
+            readResult = Console.ReadLine();
+
+            if (readResult != null || readResult != "?"  || readResult!="") AgeChangeValid=false;
+
+            Console.WriteLine("ingrese un nickname valida");
+           } while (!AgeChangeValid);
+
+           ourAnimals[selectedNum,3]= "Nickname: " + readResult;
+            break;
+
+
+
+                case "2":
+
+            Console.Clear();
+            Console.WriteLine($"Mascota con id {readResult} ha sido seleccioniada  {selectedNum}");
+            Console.WriteLine($"ingrese una descripcion de la personalidad para el id #: {readResult} (size,color,breed, gender,weight,housebroken)");
+
+            validEntry=false;
+            do
+            {
+            readResult=Console.ReadLine();
+                if(readResult==null || readResult=="") continue;
+            validEntry=true;
+            } while (!validEntry);
+            ourAnimals[selectedNum,5]="Personality: "+ readResult;
+            break;
+
+            }
+           
+           break;
+
 
         case "5":
             // Edit an animal’s age");
