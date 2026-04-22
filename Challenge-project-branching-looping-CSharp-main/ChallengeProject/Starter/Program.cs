@@ -486,7 +486,7 @@ do
             Console.WriteLine("ingrese el nickname de la mascota: ");
             readResult = Console.ReadLine();
 
-            if (readResult != null || readResult != "?"  || readResult!="") AgeChangeValid=false;
+            if (readResult != null || readResult != "?"  || readResult!="") AgeChangeValid=true;
 
             Console.WriteLine("ingrese un nickname valida");
            } while (!AgeChangeValid);
